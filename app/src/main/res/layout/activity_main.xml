@@ -76,7 +76,7 @@
 				android:layout_width="wrap_content"
 				android:gravity="right"
 				android:layout_height="wrap_content"
-				android:hint="Scale"
+				android:hint="Scale value"
 				android:text="5"
 				android:inputType="numberSigned" />
 
@@ -103,6 +103,22 @@
 				android:layout_height="wrap_content"
 				android:text="Delete"
 				android:onClick="clickToRemove" />
+
+		<EditText
+				android:id="@+id/aplha_value_et"
+				android:layout_width="wrap_content"
+				android:gravity="right"
+				android:layout_height="wrap_content"
+				android:hint="aplha"
+				android:text="0.5"
+				android:inputType="numberDecimal" />
+
+
+		<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Play aplha"
+				android:onClick="playAplha" />
 
 	</LinearLayout>
 </ScrollView>

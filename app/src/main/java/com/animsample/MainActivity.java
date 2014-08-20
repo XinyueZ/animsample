@@ -2,6 +2,7 @@ package com.animsample;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -119,5 +120,21 @@ public class MainActivity extends ActionBarActivity {
 				ObjectAnimator.ofFloat(v, "scaleY", initY, 0).setDuration(500)
 		);
 		animatorSet.start();
+	}
+
+	/**
+	 * Play aplha(transparency) on {@code v}. 1 no transparent，0 full transparent.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to be transparent.
+	 */
+	public void playAplha(View v) {
+		float initAplha = v.getAlpha();
+		ObjectAnimator a = ObjectAnimator.ofFloat(v, "Alpha", initAplha, Utils.getValueF(this, R.id.aplha_value_et, 0f),
+				0, initAplha)
+				.setDuration(2000);
+		a.setRepeatCount(ValueAnimator.INFINITE);
+		a.start();
+		v.setEnabled(false);
 	}
 }
