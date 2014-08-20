@@ -4,69 +4,120 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
-
+/**
+ * Demo, play property animations.
+ */
 public class MainActivity extends ActionBarActivity {
+
+	public static final int LAYOUT = R.layout.activity_main;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(LAYOUT);
 	}
 
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	/**
 	 * Rotate {@code v}.
-	 * @param v {@link android.view.View} to rotate.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to rotate.
 	 */
 	public void rotateMe(View v) {
-		int repeatCount = 2;
-		TextView repeatTv = (TextView) findViewById(R.id.rotate_me_repeat_et);
-		if(!TextUtils.isEmpty(repeatTv.getText())) {
-			repeatCount = Integer.valueOf(repeatTv.getText().toString());
-		}
-		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(v, "rotation", 0, 360f);
-		objectAnimator.setRepeatCount(repeatCount);
+		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(v, "rotation", 0, Utils.getValueF(this,
+				R.id.rotate_me_angle_et, 360f));
+		objectAnimator.setRepeatCount(Utils.getValue(this, R.id.rotate_me_repeat_et, 2));
 		objectAnimator.start();
 	}
 
 	/**
-	 * Move {@code v}.
-	 * @param v {@link android.view.View} to move.
+	 * Change translation of {@code v}.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to change.
 	 */
-	public void moveMe(View v) {
-		float startX = v.getX();
-		float startY = v.getY();
+	public void changeTranslation(View v) {
+		float initTranX = v.getTranslationX();
+		float initTranY = v.getTranslationY();
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.playSequentially(
-				ObjectAnimator.ofFloat(v, "translationX", 0f, 400f).setDuration(2000),
-				ObjectAnimator.ofFloat(v, "translationY", 0f, 400f).setDuration(2000),
-				ObjectAnimator.ofFloat(v, "x", startX).setDuration(2000),
-				ObjectAnimator.ofFloat(v, "y", startY).setDuration(2000));
+				ObjectAnimator.ofFloat(v, "translationX", Utils.getValueF(this, R.id.translation_start_et, 0f),
+						Utils.getValueF(this, R.id.translation_value_et, 500f), initTranX).setDuration(2000),
+				ObjectAnimator.ofFloat(v, "translationY", Utils.getValueF(this, R.id.translation_start_et, 0f),
+						Utils.getValueF(this, R.id.translation_value_et, 500f), initTranY).setDuration(2000)
+		);
+
+//		float startX = v.getX();
+//		float startY = v.getY();
+//				ObjectAnimator.ofFloat(v, "x", startX).setDuration(2000),
+//				ObjectAnimator.ofFloat(v, "y", startY).setDuration(2000));
+		animatorSet.start();
+	}
+
+	/**
+	 * Scale {@code v} on x-axis.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to scale.
+	 */
+	public void scaleXme(View v) {
+		float initX = v.getScaleX();
+		ObjectAnimator.ofFloat(v, "scaleX", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
+				.getValueF(
+						this, R.id.scale_value_et, 5f), initX).setDuration(2000).start();
+	}
+
+	/**
+	 * Scale {@code v} on y-axis.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to scale.
+	 */
+	public void scaleYme(View v) {
+		float initY = v.getScaleY();
+		ObjectAnimator.ofFloat(v, "scaleY", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
+				.getValueF(
+						this, R.id.scale_value_et, 5f), initY).setDuration(2000).start();
+	}
+
+	/**
+	 * Scale {@code v} on x-y-axis.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to scale.
+	 */
+	public void scaleMe(View v) {
+		float initX = v.getScaleX();
+		float initY = v.getScaleY();
+		AnimatorSet animatorSet = new AnimatorSet();
+		animatorSet.playTogether(
+				ObjectAnimator.ofFloat(v, "scaleX", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
+						.getValueF(
+								this, R.id.scale_value_et, 5f), initX).setDuration(2000),
+				ObjectAnimator.ofFloat(v, "scaleY", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
+						.getValueF(
+								this, R.id.scale_value_et, 5f), initY).setDuration(2000)
+		);
+		animatorSet.start();
+	}
+
+	/**
+	 * Simulate click and zoom to remove. It is only a scale-animation.
+	 *
+	 * @param v
+	 * 		{@link android.view.View} to remove.
+	 */
+	public void clickToRemove(View v) {
+		float initX = v.getScaleX();
+		float initY = v.getScaleY();
+		AnimatorSet animatorSet = new AnimatorSet();
+		animatorSet.playTogether(
+				ObjectAnimator.ofFloat(v, "scaleX", initX, 0).setDuration(500),
+				ObjectAnimator.ofFloat(v, "scaleY", initY, 0).setDuration(500)
+		);
 		animatorSet.start();
 	}
 }
