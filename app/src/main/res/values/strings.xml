@@ -2,5 +2,5 @@
 <resources>
 
 	<string name="app_name">AnimSample</string>
-
+	<string name="app_name_pre_hc">AnimSample Pre 3.0</string>
 </resources>

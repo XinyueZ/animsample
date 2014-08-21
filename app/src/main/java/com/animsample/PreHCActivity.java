@@ -1,25 +1,19 @@
 package com.animsample;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 /**
- * Demo, play property animations.
+ * Demo, play View Property Animations on < 3.0
  */
-public class MainActivity extends ActionBarActivity {
+public class PreHCActivity extends ActionBarActivity {
 
 	public static final int LAYOUT = R.layout.activity_main;
 
@@ -29,42 +23,7 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(LAYOUT);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-			new AlertDialog.Builder(this)
-					.setMessage("Only pre 3.0 demo show available.")
-					.setCancelable(false)
-					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent intent = new Intent(MainActivity.this, PreHCActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-							startActivity(intent);
-						}
-					}).create().show();
-		}
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.menu_pre_hc:
-				Intent intent = new Intent(this, PreHCActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(intent);
-				break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	/**
 	 * Rotate {@code v}.
@@ -72,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
 	 * @param v
 	 * 		{@link android.view.View} to rotate.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void rotateMe(final View v) {
 		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(v, "rotation", 0, Utils.getValueF(this,
 				R.id.rotate_me_angle_et, 360f));
@@ -93,13 +51,13 @@ public class MainActivity extends ActionBarActivity {
 		objectAnimator.start();
 	}
 
+
 	/**
 	 * Rotate {@code v}.
 	 *
 	 * @param v
 	 * 		{@link android.view.View} to rotate.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void rotateXMe(final View v) {
 		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(v, "rotationX", 0, Utils.getValueF(this,
 				R.id.rotate_me_angle_et, 360f));
@@ -120,13 +78,13 @@ public class MainActivity extends ActionBarActivity {
 		objectAnimator.start();
 	}
 
+
 	/**
 	 * Rotate {@code v}.
 	 *
 	 * @param v
 	 * 		{@link android.view.View} to rotate.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void rotateYMe(final View v) {
 		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(v, "rotationY", 0, Utils.getValueF(this,
 				R.id.rotate_me_angle_et, 360f));
@@ -147,17 +105,15 @@ public class MainActivity extends ActionBarActivity {
 		objectAnimator.start();
 	}
 
-
 	/**
 	 * Change translation of {@code v}.
 	 *
 	 * @param v
 	 * 		{@link android.view.View} to change.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void changeTranslation(final View v) {
-		float initTranX = v.getTranslationX();
-		float initTranY = v.getTranslationY();
+		float initTranX = ViewHelper.getTranslationX(v);
+		float initTranY = ViewHelper.getTranslationY(v);
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.playSequentially(
 				ObjectAnimator.ofFloat(v, "translationX", Utils.getValueF(this, R.id.translation_start_et, 0f),
@@ -192,9 +148,8 @@ public class MainActivity extends ActionBarActivity {
 	 * @param v
 	 * 		{@link android.view.View} to scale.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void scaleXme(View v) {
-		float initX = v.getScaleX();
+		float initX = ViewHelper.getScaleX(v);
 		ObjectAnimator.ofFloat(v, "scaleX", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
 				.getValueF(
 						this, R.id.scale_value_et, 5f), initX).setDuration(2000).start();
@@ -206,9 +161,8 @@ public class MainActivity extends ActionBarActivity {
 	 * @param v
 	 * 		{@link android.view.View} to scale.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void scaleYme(View v) {
-		float initY = v.getScaleY();
+		float initY = ViewHelper.getScaleY(v);
 		ObjectAnimator.ofFloat(v, "scaleY", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
 				.getValueF(
 						this, R.id.scale_value_et, 5f), initY).setDuration(2000).start();
@@ -220,10 +174,9 @@ public class MainActivity extends ActionBarActivity {
 	 * @param v
 	 * 		{@link android.view.View} to scale.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void scaleMe(final View v) {
-		float initX = v.getScaleX();
-		float initY = v.getScaleY();
+		float initX = ViewHelper.getScaleX(v);
+		float initY = ViewHelper.getScaleY(v);
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.playTogether(
 				ObjectAnimator.ofFloat(v, "scaleX", Utils.getValueF(this, R.id.scale_start_et, 0f), Utils
@@ -255,10 +208,9 @@ public class MainActivity extends ActionBarActivity {
 	 * @param v
 	 * 		{@link android.view.View} to remove.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void clickToRemove(final View v) {
-		float initX = v.getScaleX();
-		float initY = v.getScaleY();
+		float initX = ViewHelper.getScaleX(v);
+		float initY = ViewHelper.getScaleY(v);
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.playTogether(
 				ObjectAnimator.ofFloat(v, "scaleX", initX, 0).setDuration(500),
@@ -286,13 +238,12 @@ public class MainActivity extends ActionBarActivity {
 	 * @param v
 	 * 		{@link android.view.View} to be transparent.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void playAplha(final View v) {
-		float initAplha = v.getAlpha();
-		ObjectAnimator a = ObjectAnimator.ofFloat(v, "Alpha", initAplha, Utils.getValueF(this, R.id.aplha_value_et, 0f),
+		float initAplha = ViewHelper.getAlpha(v);
+		ObjectAnimator a = ObjectAnimator.ofFloat(v, "alpha", initAplha, Utils.getValueF(this, R.id.aplha_value_et, 0f),
 				0, initAplha)
 				.setDuration(2000);
-		a.setRepeatCount(ValueAnimator.INFINITE);
+		a.setRepeatCount(ObjectAnimator.INFINITE);
 		a.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationStart(Animator animation) {
