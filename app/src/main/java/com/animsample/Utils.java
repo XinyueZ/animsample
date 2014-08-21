@@ -1,6 +1,7 @@
 package com.animsample;
 
 import android.app.Activity;
+import android.os.Build;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -8,6 +9,8 @@ import android.widget.TextView;
  * Util for some methods to get property settings from UI.
  */
 public final class Utils {
+	public static final String ALPHA =
+			(android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) ? "alpha" : "Alpha";
 	/**
 	 * Get {@link int} value from {@code uiResId} on {@link android.app.Activity}.
 	 *

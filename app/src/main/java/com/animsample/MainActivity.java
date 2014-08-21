@@ -289,7 +289,7 @@ public class MainActivity extends ActionBarActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void playAplha(final View v) {
 		float initAplha = v.getAlpha();
-		ObjectAnimator a = ObjectAnimator.ofFloat(v, "Alpha", initAplha, Utils.getValueF(this, R.id.aplha_value_et, 0f),
+		ObjectAnimator a = ObjectAnimator.ofFloat(v, Utils.ALPHA, initAplha, Utils.getValueF(this, R.id.aplha_value_et, 0f),
 				0, initAplha)
 				.setDuration(2000);
 		a.setRepeatCount(ValueAnimator.INFINITE);
