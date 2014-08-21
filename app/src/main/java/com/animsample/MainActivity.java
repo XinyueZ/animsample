@@ -43,6 +43,11 @@ public class MainActivity extends ActionBarActivity {
 							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 							startActivity(intent);
 						}
+					}).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
 					}).create().show();
 		}
 	}
@@ -289,7 +294,8 @@ public class MainActivity extends ActionBarActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void playAplha(final View v) {
 		float initAplha = v.getAlpha();
-		ObjectAnimator a = ObjectAnimator.ofFloat(v, Utils.ALPHA, initAplha, Utils.getValueF(this, R.id.aplha_value_et, 0f),
+		ObjectAnimator a = ObjectAnimator.ofFloat(v, Utils.ALPHA, initAplha, Utils.getValueF(this, R.id.aplha_value_et,
+						0f),
 				0, initAplha)
 				.setDuration(2000);
 		a.setRepeatCount(ValueAnimator.INFINITE);
