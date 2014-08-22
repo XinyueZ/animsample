@@ -4,8 +4,16 @@
 
 	<item
 			android:id="@+id/menu_pre_hc"
-			android:title="Open pre 3.0 Demo"
+			android:title="@string/demo_pre_hc"
 			app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_view_property_demo"
+        android:title="@string/demo_view_property_animation"
+        app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_pre_hc_view_property_demo"
+        android:title="@string/demo_view_property_animation_pre_hc"
+        app:showAsAction="never" />
 
 </menu>

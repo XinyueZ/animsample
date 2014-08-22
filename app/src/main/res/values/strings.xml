@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">AnimSample</string>
-	<string name="app_name_pre_hc">AnimSample Pre 3.0</string>
+    <string name="app_name">AnimSample</string>
+    <string name="demo">@string/app_name</string>
+    <string name="demo_pre_hc">AnimSample Pre 3.0</string>
+    <string name="demo_view_property_animation">ViewPropertyAnimation</string>
+    <string name="demo_view_property_animation_pre_hc">ViewPropertyAnimation Pre 3.0</string>
 </resources>

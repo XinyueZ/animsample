@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/demo" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,15 @@
 
 	    <activity
 			    android:name=".PreHCActivity"
-			    android:label="@string/app_name_pre_hc" />
+			    android:label="@string/demo_pre_hc" />
+
+        <activity
+            android:name=".MainViewPropertyAnimActivity"
+            android:label="@string/demo_view_property_animation" />
+
+        <activity
+            android:name=".PreHCViewPropertyAnimActivity"
+            android:label="@string/demo_view_property_animation_pre_hc" />
     </application>
 
 </manifest>
