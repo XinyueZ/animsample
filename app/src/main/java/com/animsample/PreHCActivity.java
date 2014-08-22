@@ -1,7 +1,10 @@
 package com.animsample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
@@ -23,6 +26,26 @@ public class PreHCActivity extends ActionBarActivity {
 		setContentView(LAYOUT);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main_pre_hc, menu);
+		return true;
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
+		switch (item.getItemId()) {
+		case R.id.menu_pre_hc_view_property_demo:
+			intent = new Intent(this, PreHCViewPropertyAnimActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	/**
 	 * Rotate {@code v}.
@@ -119,7 +142,7 @@ public class PreHCActivity extends ActionBarActivity {
 				initTranX).setDuration(2000), ObjectAnimator.ofFloat(v, "translationY", Utils.getValueF(this,
 						R.id.translation_start_et, 0f), Utils.getValueF(this, R.id.translation_value_et, 500f),
 				initTranY).setDuration(2000));
- 
+
 		animatorSet.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationStart(Animator animation) {

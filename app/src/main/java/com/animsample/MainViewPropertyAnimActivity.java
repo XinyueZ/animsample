@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -22,13 +25,20 @@ public class MainViewPropertyAnimActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(LAYOUT);
+		registerReceiver(mUpdateAplhaReceiver, mUpdateAplhaFilter);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mUpdateAplhaReceiver);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1) {
-			new AlertDialog.Builder(this).setMessage("Only pre 3.0 demo show available.").setCancelable(false)
+			new AlertDialog.Builder(this).setMessage("Only pre 3.1 demo show available.").setCancelable(false)
 					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -128,8 +138,6 @@ public class MainViewPropertyAnimActivity extends ActionBarActivity {
 									@Override
 									public void onAnimationEnd(Animator animation) {
 										super.onAnimationEnd(animation);
-										//Should call to terminal animation demo, otherwise view can't return to original position if be replayed.
-										animation.cancel();
 										v.setEnabled(true);
 									}
 								});
@@ -242,19 +250,29 @@ public class MainViewPropertyAnimActivity extends ActionBarActivity {
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	public void playAplha(final View v) {
-		v.setEnabled(false);
-		v.animate().alpha(0.5f).setDuration(2000).setListener(new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				super.onAnimationEnd(animation);
-				v.animate().alpha(1f).setDuration(2000).setListener(new AnimatorListenerAdapter() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						super.onAnimationEnd(animation);
-						playAplha(v);
-					}
-				});
-			}
-		});
+		if (v != null) {
+			mAplhaV = v;
+			mAplhaV.setEnabled(false);
+			mAplhaV.animate().alpha(mCurrentAlpha).setDuration(500).setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					super.onAnimationEnd(animation);
+					sendBroadcast(new Intent(ACTION_UPDATE_APLHA));
+				}
+			});
+		}
 	}
+
+
+	private static final String ACTION_UPDATE_APLHA = "update.aplha.action";
+	private float mCurrentAlpha = 0;
+	private View mAplhaV;
+	private IntentFilter mUpdateAplhaFilter = new IntentFilter(ACTION_UPDATE_APLHA);
+	private BroadcastReceiver mUpdateAplhaReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			mCurrentAlpha = mCurrentAlpha == 0 ? 1 : 0;
+			playAplha(mAplhaV);
+		}
+	};
 }
