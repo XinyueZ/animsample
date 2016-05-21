@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
@@ -16,7 +16,7 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 /**
  * Demo, play the View Property Animations pre 3.1.
  */
-public class PreHCViewPropertyAnimActivity extends ActionBarActivity {
+public final class PreHCViewPropertyAnimActivity extends AppCompatActivity {
 
 	public static final int LAYOUT = R.layout.activity_vpa;
 

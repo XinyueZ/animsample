@@ -5,4 +5,8 @@
         android:title="@string/demo_view_property_animation_pre_hc"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_two_sides_frame"
+        android:title="@string/demo_two_sides_frames"
+        app:showAsAction="never"/>
 </menu>

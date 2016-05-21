@@ -1,19 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-	<item
-			android:id="@+id/menu_pre_hc"
-			android:title="@string/demo_pre_hc"
-			app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_pre_hc"
+        android:title="@string/demo_pre_hc"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_view_property_demo"
         android:title="@string/demo_view_property_animation"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/menu_pre_hc_view_property_demo"
         android:title="@string/demo_view_property_animation_pre_hc"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_two_sides_frame"
+        android:title="@string/demo_two_sides_frames"
+        app:showAsAction="never"/>
 
 </menu>
