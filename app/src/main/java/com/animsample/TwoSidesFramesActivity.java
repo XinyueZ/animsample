@@ -1,9 +1,6 @@
 package com.animsample;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -19,7 +16,6 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.hardware.display.DisplayManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +28,7 @@ import com.animsample.databinding.MainBinding;
 public final class TwoSidesFramesActivity extends AppCompatActivity {
 	private static final String TAG = TwoSidesFramesActivity.class.getName();
 	private static final @LayoutRes int LAYOUT = R.layout.activity_two_side_frames;
-	private static final int DURATION = 1000;
+	private static final int DURATION = 500;
 	private static final @IdRes int LAYOUT_CONTAINER_LEFT_FRAGMENT = R.id.main_container_left;
 	private static final @IdRes int LAYOUT_CONTAINER_RIGHT_FRAGMENT = R.id.main_container_right;
 	private static final @ColorRes int LEFT_COLOR = R.color.colorPrimaryDark;
@@ -49,52 +45,20 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 		//Show fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction()
+		               .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_in_left)
 		               .replace(LAYOUT_CONTAINER_LEFT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), LEFT_TEXT, LEFT_COLOR))
 		               .commit();
 		fragmentManager.beginTransaction()
 		               .replace(LAYOUT_CONTAINER_RIGHT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), RIGHT_TEXT, RIGHT_COLOR))
 		               .commit();
 		fragmentManager.executePendingTransactions();
-
 		//Animates
-		ScreenSize sz = getScreenSize(this, 0);
-		int leftPerc = (int) (sz.Width * 0.6);
-		int rightPerc = (int) (sz.Width * 0.4);
+		final ScreenSize sz = getScreenSize(this, 0);
+		final double lPerc = sz.Width * 0.4;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			//Left
-			ObjectAnimator animator = ObjectAnimator.ofInt(mBinding.mainContainerLeft, "right", leftPerc)
-			                                        .setDuration(DURATION);
-			animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-				@Override
-				public void onAnimationUpdate(ValueAnimator valueAnimator) {
-					Log.i(TAG, "onAnimationUpdate: mainContainerLeft " + TAG);
-				}
-			});
-			animator.addListener(new AnimatorListenerAdapter() {
-				@Override
-				public void onAnimationEnd(Animator animation) {
-					super.onAnimationEnd(animation);
-					Log.i(TAG, "onAnimationEnd: mainContainerLeft " + TAG);
-				}
-			});
-			animator.start();
-
 			//Right
-			animator = ObjectAnimator.ofInt(mBinding.mainContainerRight, "left", rightPerc)
-			                         .setDuration(DURATION);
-			animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-				@Override
-				public void onAnimationUpdate(ValueAnimator valueAnimator) {
-					Log.i(TAG, "onAnimationUpdate: mainContainerRight " + TAG);
-				}
-			});
-			animator.addListener(new AnimatorListenerAdapter() {
-				@Override
-				public void onAnimationEnd(Animator animation) {
-					super.onAnimationEnd(animation);
-					Log.i(TAG, "onAnimationEnd: mainContainerRight " + TAG);
-				}
-			});
+			ObjectAnimator animator = ObjectAnimator.ofInt(mBinding.mainContainerRight, "left", (int) lPerc)
+			                                        .setDuration(DURATION);
 			animator.start();
 		}
 	}
@@ -144,7 +108,7 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 		public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 			Bundle args = getArguments();
-			mBinding.setVariable(com.animsample.BR.text, getString(args.getInt(EXTRAS_TEXT)));
+			mBinding.setText(getString(args.getInt(EXTRAS_TEXT)));
 			int color = ResourcesCompat.getColor(getResources(), args.getInt(EXTRAS_BACKGROUND_COLOR), null);
 			view.setBackgroundColor(color);
 		}

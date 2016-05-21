@@ -11,20 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/main_container_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_marginEndPercent="60%"
+            app:layout_marginRightPercent="60%"
+            app:layout_widthPercent="40%"/>
 
         <FrameLayout
             android:id="@+id/main_container_right"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_marginLeftPercent="40%"
-            app:layout_widthPercent="60%"/>
+            app:layout_widthPercent="100%"/>
 
 
-        <FrameLayout
-            android:id="@+id/main_container_left"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_marginRightPercent="60%"
-            app:layout_widthPercent="40%"/>
     </android.support.percent.PercentFrameLayout>
 </layout>
