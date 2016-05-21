@@ -1,5 +1,7 @@
 package com.animsample;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -28,13 +30,10 @@ import com.animsample.databinding.MainBinding;
 public final class TwoSidesFramesActivity extends AppCompatActivity {
 	private static final String TAG = TwoSidesFramesActivity.class.getName();
 	private static final @LayoutRes int LAYOUT = R.layout.activity_two_side_frames;
-	private static final int DURATION = 500;
+	private static final int DURATION = 1000;
 	private static final @IdRes int LAYOUT_CONTAINER_LEFT_FRAGMENT = R.id.main_container_left;
-	private static final @IdRes int LAYOUT_CONTAINER_RIGHT_FRAGMENT = R.id.main_container_right;
 	private static final @ColorRes int LEFT_COLOR = R.color.colorPrimaryDark;
-	private static final @ColorRes int RIGHT_COLOR = R.color.colorAccent;
 	private static final @StringRes int LEFT_TEXT = R.string.left;
-	private static final @StringRes int RIGHT_TEXT = R.string.right;
 	private MainBinding mBinding;
 
 	@Override
@@ -42,16 +41,6 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		mBinding = DataBindingUtil.setContentView(this, LAYOUT);
 
-		//Show fragments
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-		               .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_in_left)
-		               .replace(LAYOUT_CONTAINER_LEFT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), LEFT_TEXT, LEFT_COLOR))
-		               .commit();
-		fragmentManager.beginTransaction()
-		               .replace(LAYOUT_CONTAINER_RIGHT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), RIGHT_TEXT, RIGHT_COLOR))
-		               .commit();
-		fragmentManager.executePendingTransactions();
 		//Animates
 		final ScreenSize sz = getScreenSize(this, 0);
 		final double lPerc = sz.Width * 0.4;
@@ -59,8 +48,22 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 			//Right
 			ObjectAnimator animator = ObjectAnimator.ofInt(mBinding.mainContainerRight, "left", (int) lPerc)
 			                                        .setDuration(DURATION);
+			animator.addListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					super.onAnimationEnd(animation);
+					mBinding.mainContainerRight.getLayoutParams().width = (int) (sz.Width - lPerc);
+				}
+			});
 			animator.start();
 		}
+		//Show fragments
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+		               .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_in_left)
+		               .replace(LAYOUT_CONTAINER_LEFT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), LEFT_TEXT, LEFT_COLOR))
+		               .commit();
+		fragmentManager.executePendingTransactions();
 	}
 
 
