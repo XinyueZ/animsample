@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.percent.PercentFrameLayout;
+import android.support.percent.PercentLayoutHelper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
@@ -52,7 +55,12 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 				@Override
 				public void onAnimationEnd(Animator animation) {
 					super.onAnimationEnd(animation);
-					mBinding.mainContainerRight.getLayoutParams().width = (int) (sz.Width - lPerc);
+					PercentFrameLayout.LayoutParams params = (PercentFrameLayout.LayoutParams) mBinding.mainContainerRight.getLayoutParams();
+					PercentLayoutHelper.PercentLayoutInfo info = params.getPercentLayoutInfo();
+					Resources resources = getResources();
+					info.widthPercent = resources.getFraction(R.fraction.fragment_main_tablet_right_emaciated, 1, 1);
+					info.leftMarginPercent = resources.getFraction(R.fraction.fragment_main_tablet_left, 1, 1);
+					mBinding.mainContainerRight.requestLayout();
 				}
 			});
 			animator.start();

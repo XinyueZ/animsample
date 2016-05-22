@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="fragment_main_tablet_right">100%</fraction>
+    <fraction name="fragment_main_tablet_left">40%</fraction>
+    <fraction name="fragment_main_tablet_right_emaciated">60%</fraction>
+</resources>
