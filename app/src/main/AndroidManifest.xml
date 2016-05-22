@@ -34,6 +34,7 @@
         <activity
             android:name=".TwoSidesFramesActivity"
             android:label="@string/demo_two_sides_frames"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoBackground"/>
 
 
