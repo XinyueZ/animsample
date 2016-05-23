@@ -25,9 +25,14 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
+import com.animsample.bus.StartCustomAnimationEvent;
 import com.animsample.databinding.FrameBinding;
 import com.animsample.databinding.MainBinding;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 
 public final class TwoSidesFramesActivity extends AppCompatActivity {
@@ -39,16 +44,51 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 	private static final @StringRes int LEFT_TEXT = R.string.left;
 	private MainBinding mBinding;
 
+	//------------------------------------------------
+	//Subscribes, event-handlers
+	//------------------------------------------------
+
+	/**
+	 * Handler for {@link}.
+	 *
+	 * @param e Event {@link}.
+	 */
+	@Subscribe
+	public void onEvent(StartCustomAnimationEvent e) {
+		animateRightSide();
+	}
+	//------------------------------------------------
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		EventBus.getDefault()
+		        .register(this);
 		mBinding = DataBindingUtil.setContentView(this, LAYOUT);
+		animateLeftSide();
+	}
 
-		//Animates
+	@Override
+	protected void onDestroy() {
+		EventBus.getDefault()
+		        .unregister(this);
+		super.onDestroy();
+	}
+
+	private void animateLeftSide() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+		               .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_in_left)
+		               .replace(LAYOUT_CONTAINER_LEFT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), LEFT_TEXT, LEFT_COLOR))
+		               .commit();
+		fragmentManager.executePendingTransactions();
+	}
+
+	private void animateRightSide() {
 		final ScreenSize sz = getScreenSize(this, 0);
 		final double lPerc = sz.Width * 0.4;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			//Right
 			ObjectAnimator animator = ObjectAnimator.ofInt(mBinding.mainContainerRight, "left", (int) lPerc)
 			                                        .setDuration(DURATION);
 			animator.addListener(new AnimatorListenerAdapter() {
@@ -65,13 +105,6 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 			});
 			animator.start();
 		}
-		//Show fragments
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-		               .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_in_left)
-		               .replace(LAYOUT_CONTAINER_LEFT_FRAGMENT, FrameFragment.newInstance(getApplicationContext(), LEFT_TEXT, LEFT_COLOR))
-		               .commit();
-		fragmentManager.executePendingTransactions();
 	}
 
 
@@ -122,6 +155,13 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 			mBinding.setText(getString(args.getInt(EXTRAS_TEXT)));
 			int color = ResourcesCompat.getColor(getResources(), args.getInt(EXTRAS_BACKGROUND_COLOR), null);
 			view.setBackgroundColor(color);
+		}
+
+		@Override
+		public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+			EventBus.getDefault()
+			        .post(new StartCustomAnimationEvent());
+			return super.onCreateAnimation(transit, enter, nextAnim);
 		}
 	}
 }
