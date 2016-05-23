@@ -38,7 +38,6 @@ import org.greenrobot.eventbus.Subscribe;
 public final class TwoSidesFramesActivity extends AppCompatActivity {
 	private static final String TAG = TwoSidesFramesActivity.class.getName();
 	private static final @LayoutRes int LAYOUT = R.layout.activity_two_side_frames;
-	private static final int DURATION = 1000;
 	private static final @IdRes int LAYOUT_CONTAINER_LEFT_FRAGMENT = R.id.main_container_left;
 	private static final @ColorRes int LEFT_COLOR = R.color.colorPrimaryDark;
 	private static final @StringRes int LEFT_TEXT = R.string.left;
@@ -90,7 +89,7 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 		final double lPerc = sz.Width * 0.4;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ObjectAnimator animator = ObjectAnimator.ofInt(mBinding.mainContainerRight, "left", (int) lPerc)
-			                                        .setDuration(DURATION);
+			                                        .setDuration(getResources().getInteger(R.integer.animation_duration));
 			animator.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {

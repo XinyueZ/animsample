@@ -3,4 +3,5 @@
     <fraction name="fragment_main_tablet_right">100%</fraction>
     <fraction name="fragment_main_tablet_left">40%</fraction>
     <fraction name="fragment_main_tablet_right_emaciated">60%</fraction>
+    <integer name="animation_duration">2000</integer>
 </resources>
