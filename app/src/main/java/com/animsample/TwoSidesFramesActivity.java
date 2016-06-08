@@ -29,7 +29,7 @@ import android.view.animation.Animation;
 
 import com.animsample.bus.StartCustomAnimationEvent;
 import com.animsample.databinding.FrameBinding;
-import com.animsample.databinding.MainBinding;
+import com.animsample.databinding.TwoSidesFramesBinding;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,7 +41,7 @@ public final class TwoSidesFramesActivity extends AppCompatActivity {
 	private static final @IdRes int LAYOUT_CONTAINER_LEFT_FRAGMENT = R.id.main_container_left;
 	private static final @ColorRes int LEFT_COLOR = R.color.colorPrimaryDark;
 	private static final @StringRes int LEFT_TEXT = R.string.left;
-	private MainBinding mBinding;
+	private TwoSidesFramesBinding mBinding;
 
 	//------------------------------------------------
 	//Subscribes, event-handlers

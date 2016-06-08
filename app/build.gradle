@@ -25,6 +25,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         debug {
@@ -41,7 +43,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:percent:23.4.0'
-    compile 'com.google.android.gms:play-services-maps:9.0.0'
+    compile 'com.google.android.gms:play-services-maps:9.0.2'
     compile 'org.greenrobot:eventbus:3.0.0'
 }
 

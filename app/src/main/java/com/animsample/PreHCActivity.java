@@ -48,6 +48,11 @@ public final class PreHCActivity extends AppCompatActivity {
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				startActivity(intent);
 				break;
+			case R.id.menu_animated_vector_drawable:
+				intent = new Intent(this, AnimatedVectorDrawableActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(intent);
+				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

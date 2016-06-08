@@ -38,6 +38,10 @@
             android:theme="@style/AppTheme.NoBackground"/>
 
 
+        <activity
+            android:name=".AnimatedVectorDrawableActivity"
+            android:label="@string/demo_animated_vector_drawable"  />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

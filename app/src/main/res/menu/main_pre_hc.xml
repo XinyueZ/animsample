@@ -9,4 +9,10 @@
         android:id="@+id/menu_two_sides_frame"
         android:title="@string/demo_two_sides_frames"
         app:showAsAction="never"/>
+
+
+    <item
+        android:id="@+id/menu_animated_vector_drawable"
+        android:title="@string/demo_animated_vector_drawable"
+        app:showAsAction="never"/>
 </menu>
