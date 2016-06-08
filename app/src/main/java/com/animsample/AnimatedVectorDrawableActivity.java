@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.animsample.databinding.AnimatedVectorDrawableBinding;
 
@@ -16,9 +15,7 @@ public class AnimatedVectorDrawableActivity extends AppCompatActivity {
 
 	private AnimatedVectorDrawableBinding mBinding;
 
-	static {
-		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
