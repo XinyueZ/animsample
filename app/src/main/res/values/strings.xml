@@ -10,4 +10,5 @@
     <string name="demo_animated_vector_drawable">Animated vector-drawable(API v11+)</string>
     <string name="left">Left</string>
     <string name="google_maps_key">AIzaSyBqYkdlAJanYQWNfAiPNPwPRJS1xfVM0ek</string>
+    <string name="notice_1">Because at pre-Android-5 the framework does not support -pathInterpolator- which can help us to create progress-bar with Material Design , we have to define two different versions of animated-vector-drawable, one pre-Android-5 is only normal bar and above we see Material Design.</string>
 </resources>
