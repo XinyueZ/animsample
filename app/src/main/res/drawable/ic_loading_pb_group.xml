@@ -27,7 +27,7 @@
         <path
             android:fillColor="@color/colorTransparent"
             android:pathData="M0, 0 m 0, -19 a 19, 19 0 1,1 0,38"
-            android:strokeColor="@color/colorAccent"
+            android:strokeColor="@color/colorGrey"
             android:strokeLineCap="square"
             android:strokeLineJoin="miter"
             android:strokeWidth="4"
