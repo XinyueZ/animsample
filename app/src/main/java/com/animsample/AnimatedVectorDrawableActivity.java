@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.animsample.databinding.AnimatedVectorDrawableBinding;
 
 
-public class AnimatedVectorDrawableActivity extends AppCompatActivity {
+public final class AnimatedVectorDrawableActivity extends AppCompatActivity {
 	private static final @LayoutRes int LAYOUT = R.layout.activity_animated_vector_drawable;
 
 	private AnimatedVectorDrawableBinding mBinding;
@@ -25,6 +25,11 @@ public class AnimatedVectorDrawableActivity extends AppCompatActivity {
 		if( drawable instanceof Animatable) {
 			( (Animatable) drawable ).start();
 		}
-	}
 
+		drawable = mBinding.animatedDrawableProgrammaticallyIv.getDrawable();
+		if( drawable instanceof Animatable) {
+			( (Animatable) drawable ).start();
+		}
+
+	}
 }

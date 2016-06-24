@@ -2,8 +2,7 @@
         android:height="48dp"
         android:width="48dp"
         android:viewportHeight="48"
-        android:viewportWidth="48"
-        android:tint="?attr/colorControlActivated">
+        android:viewportWidth="48" >
 
     <group
         android:name="root"

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:drawable="@drawable/ic_google_logo">
+    <target
+        android:name="g1"
+        android:animation="@animator/fade_in"/>
+    <target
+        android:name="o1"
+        android:animation="@animator/fade_in"/>
+    <target
+        android:name="o2"
+        android:animation="@animator/fade_in"/>
+    <target
+        android:name="g2"
+        android:animation="@animator/fade_out"/>
+    <target
+        android:name="l"
+        android:animation="@animator/fade_out"/>
+    <target
+        android:name="e"
+        android:animation="@animator/fade_out"/>
+
+</animated-vector>
